@@ -1,0 +1,97 @@
+---
+/**
+ * Componente de fotografia editorial com vinheta sutil e etiqueta discreta de placeholder.
+ */
+interface Props {
+  label: string;
+  src?: string;
+  ratio?: string;
+  class?: string;
+}
+
+const { label, src, ratio, class: className = '' } = Astro.props;
+---
+
+<figure class={`photo ${className}`} style={ratio ? `aspect-ratio: ${ratio};` : undefined} data-photo-label={label} data-photo-src={src}>
+  {src ? (
+    <>
+      <img src={src} alt={label} loading="lazy" />
+      <figcaption class="photo-tag">{label}</figcaption>
+    </>
+  ) : (
+    <div class="photo-empty">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <rect x="3" y="5" width="18" height="14" stroke="currentColor" stroke-width="1" />
+        <circle cx="9" cy="10" r="1.6" stroke="currentColor" stroke-width="1" />
+        <path d="M3 16l5-4 4 3 3-2 6 4" stroke="currentColor" stroke-width="1" />
+      </svg>
+      <span>{label}</span>
+    </div>
+  )}
+</figure>
+
+<style>
+  .photo {
+    position: relative;
+    overflow: hidden;
+    background: var(--ph-bg, #222);
+    width: 100%;
+    border: 1px solid rgba(169, 169, 169, 0.14);
+  }
+
+  .photo::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(180deg, rgba(11, 11, 11, 0) 55%, rgba(11, 11, 11, 0.65) 100%);
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+  }
+
+  .photo img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.06);
+    transition: transform 1.1s var(--ease), filter 0.7s ease;
+  }
+
+  .photo:hover img {
+    transform: scale(1.045);
+    filter: grayscale(15%) contrast(1.02);
+  }
+
+  .photo-tag {
+    position: absolute;
+    bottom: 0.9rem;
+    left: 1rem;
+    right: 1rem;
+    z-index: 2;
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: rgba(235, 235, 235, 0.82);
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .photo-empty {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.75rem;
+    padding: 1rem;
+    text-align: center;
+    color: var(--muted, #a9a9a9);
+    font-size: 0.68rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+  }
+</style>

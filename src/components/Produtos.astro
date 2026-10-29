@@ -1,0 +1,328 @@
+---
+const produtos = [
+  {
+    num: '01',
+    tag: 'Especialidade Principal',
+    nome: 'Couro legítimo',
+    desc: 'Referência nacional na seleção, divisão e acabamento de peles legítimas nobres para grandes coleções.',
+    img: 'https://images.unsplash.com/photo-1594223274512-ad4803739b7c?auto=format&fit=crop&w=1200&q=85'
+  },
+  {
+    num: '02',
+    tag: 'Alto Giro & Escala',
+    nome: 'Couro sintético',
+    desc: 'Laminados tecnológicos de alta densidade com caimento impecável e precisão de costura.',
+    img: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3?auto=format&fit=crop&w=1200&q=85'
+  },
+  {
+    num: '03',
+    tag: 'Peças Estruturadas',
+    nome: 'Acrílico',
+    desc: 'Bolsas rígidas, clutches, alças e fechos esculturais com acabamento polido e encaixe milimétrico.',
+    img: 'https://images.unsplash.com/photo-1566150905458-1bf1fc113f0d?auto=format&fit=crop&w=1200&q=85'
+  },
+  {
+    num: '04',
+    tag: 'Construções Híbridas',
+    nome: 'Tecidos & tramas',
+    desc: 'Lonas encorpadas, jacquard e fibras naturais combinadas a estrutura e acabamentos em couro.',
+    img: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=1200&q=85'
+  }
+];
+
+const etapas = [
+  { num: '01', nome: 'Desenvolvimento', detalhe: 'Leitura de briefing e engenharia do produto' },
+  { num: '02', nome: 'Modelagem', detalhe: 'Moldes digitais e aprovação de peça-piloto' },
+  { num: '03', nome: 'Produção', detalhe: 'Corte, costura, pintura a fio e montagem' },
+  { num: '04', nome: 'Entrega', detalhe: 'Inspeção final e expedição pronta para o varejo' }
+];
+---
+
+<section class="section light" id="produtos">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="label"><span>03</span>Produtos</p>
+      <h2 class="title">Bolsas para as marcas mais exigentes do país.</h2>
+    </div>
+
+    <!-- Galeria Expansível no Hover -->
+    <div class="produtos-accordion reveal" id="produtosAccordion">
+      {produtos.map((p, idx) => (
+        <article class={`prod-panel ${idx === 0 ? 'is-expanded' : ''}`} data-prod-panel={idx} tabindex="0">
+          <img src={p.img} alt={`Foto produto · ${p.nome}`} loading="lazy" />
+          <div class="prod-gradient"></div>
+
+          <div class="prod-top-bar">
+            <span class="prod-num">{p.num}</span>
+            <span class="prod-tag">{p.tag}</span>
+          </div>
+
+          <div class="prod-caption">
+            <h3>{p.nome}</h3>
+            <p>{p.desc}</p>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <!-- Esteira de Processo Interativa -->
+    <div class="etapas-wrapper reveal">
+      <p class="label etapas-label">Esteira completa ponta a ponta</p>
+      <ol class="etapas-grid">
+        {etapas.map((e) => (
+          <li class="etapa-card">
+            <span class="etapa-num">{e.num}</span>
+            <strong>{e.nome}</strong>
+            <p>{e.detalhe}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
+  </div>
+</section>
+
+<style>
+  /* Galeria Expansível Horizontal */
+  .produtos-accordion {
+    display: flex;
+    gap: 1rem;
+    height: clamp(420px, 54vh, 540px);
+    width: 100%;
+  }
+
+  .prod-panel {
+    position: relative;
+    flex: 1;
+    overflow: hidden;
+    background: var(--kz-0b);
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 1.75rem;
+    border: 1px solid rgba(11, 11, 11, 0.18);
+    transition: flex 0.65s var(--ease);
+    outline: none;
+  }
+
+  .prod-panel.is-expanded {
+    flex: 2.4;
+  }
+
+  .prod-panel img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    filter: grayscale(100%) contrast(1.08) brightness(0.82);
+    transform: scale(1.06);
+    transition: transform 0.9s var(--ease), filter 0.65s ease;
+  }
+
+  .prod-panel.is-expanded img,
+  .prod-panel:hover img {
+    filter: grayscale(10%) contrast(1.03) brightness(0.95);
+    transform: scale(1);
+  }
+
+  .prod-gradient {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      180deg,
+      rgba(11, 11, 11, 0.55) 0%,
+      rgba(11, 11, 11, 0.1) 40%,
+      rgba(11, 11, 11, 0.88) 100%
+    );
+    pointer-events: none;
+  }
+
+  .prod-top-bar,
+  .prod-caption {
+    position: relative;
+    z-index: 2;
+    color: var(--kz-eb);
+  }
+
+  .prod-top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem;
+  }
+
+  .prod-num {
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    padding: 0.3rem 0.6rem;
+    background: rgba(11, 11, 11, 0.65);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(235, 235, 235, 0.2);
+  }
+
+  .prod-tag {
+    font-size: 0.64rem;
+    font-weight: 500;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--kz-bf);
+    opacity: 0;
+    transform: translateX(8px);
+    transition: opacity 0.4s ease, transform 0.4s var(--ease);
+    white-space: nowrap;
+  }
+
+  .prod-panel.is-expanded .prod-tag {
+    opacity: 1;
+    transform: none;
+  }
+
+  .prod-caption h3 {
+    font-size: clamp(1.1rem, 1.6vw, 1.45rem);
+    font-weight: 500;
+    line-height: 1.2;
+  }
+
+  .prod-panel.is-expanded .prod-caption h3 {
+    font-size: clamp(1.35rem, 2vw, 1.75rem);
+  }
+
+  .prod-caption p {
+    font-size: 0.92rem;
+    color: var(--kz-bf);
+    line-height: 1.55;
+    max-width: 42ch;
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: max-height 0.5s var(--ease), opacity 0.45s ease, margin-top 0.45s ease;
+  }
+
+  .prod-panel.is-expanded .prod-caption p {
+    max-height: 90px;
+    opacity: 1;
+    margin-top: 0.6rem;
+  }
+
+  /* Esteira de Etapas */
+  .etapas-wrapper {
+    margin-top: clamp(3.5rem, 6vw, 5rem);
+  }
+
+  .etapas-label {
+    margin-bottom: 1.5rem;
+  }
+
+  .etapas-grid {
+    list-style: none;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    border-top: 1px solid var(--line);
+    border-bottom: 1px solid var(--line);
+  }
+
+  .etapa-card {
+    position: relative;
+    padding: 1.75rem 1.5rem 1.75rem 0;
+    border-right: 1px solid var(--line);
+    transition: padding-left 0.35s var(--ease), background-color 0.35s ease;
+  }
+
+  .etapa-card:not(:first-child) {
+    padding-left: 1.5rem;
+  }
+
+  .etapa-card:last-child {
+    border-right: none;
+  }
+
+  .etapa-card::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--kz-0b);
+    transition: width 0.45s var(--ease);
+  }
+
+  .etapa-card:hover::before {
+    width: 100%;
+  }
+
+  .etapa-num {
+    display: block;
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+
+  .etapa-card strong {
+    display: block;
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: var(--kz-0b);
+    margin-bottom: 0.3rem;
+  }
+
+  .etapa-card p {
+    font-size: 0.86rem;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+
+  @media (max-width: 960px) {
+    .produtos-accordion {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      height: auto;
+    }
+
+    .prod-panel {
+      height: 320px;
+    }
+
+    .prod-panel .prod-tag,
+    .prod-panel .prod-caption p {
+      opacity: 1;
+      max-height: 100px;
+      margin-top: 0.5rem;
+      transform: none;
+    }
+
+    .etapas-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .etapa-card {
+      padding: 1.5rem !important;
+      border-bottom: 1px solid var(--line);
+    }
+  }
+
+  @media (max-width: 560px) {
+    .produtos-accordion,
+    .etapas-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>
+
+<script>
+  const panels = document.querySelectorAll('[data-prod-panel]');
+  panels.forEach((panel) => {
+    const activate = () => {
+      panels.forEach((p) => p.classList.remove('is-expanded'));
+      panel.classList.add('is-expanded');
+    };
+    panel.addEventListener('mouseenter', activate);
+    panel.addEventListener('focus', activate);
+    panel.addEventListener('click', activate);
+  });
+</script>

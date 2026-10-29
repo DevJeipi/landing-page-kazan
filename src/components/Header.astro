@@ -1,0 +1,167 @@
+---
+const links = [
+  { href: '#historia', label: 'História' },
+  { href: '#proposito', label: 'Missão e Valores' },
+  { href: '#produtos', label: 'Produtos' },
+  { href: '#fotos', label: 'Fotos' },
+  { href: '#vagas', label: 'Vagas' }
+];
+---
+
+<header class="header" id="header">
+  <div class="container header-inner">
+    <a href="#topo" class="logo" aria-label="Kazan, início">
+      <img src="/images/logo-kazan.png" alt="KAZAN" />
+    </a>
+
+    <nav class="nav" id="nav" aria-label="Navegação principal">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a href="#contato" class="nav-contact">Contato</a>
+    </nav>
+
+    <button class="menu-btn" id="menuBtn" aria-label="Abrir menu" aria-expanded="false" aria-controls="nav">
+      <span></span>
+      <span></span>
+    </button>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: fixed;
+    inset: 0 0 auto 0;
+    z-index: 100;
+    height: var(--header-h);
+    background: rgba(11, 11, 11, 0.9);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(235, 235, 235, 0.08);
+  }
+
+  .header-inner {
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+  }
+
+  .logo img {
+    height: 18px;
+    width: auto;
+  }
+
+  .nav {
+    display: flex;
+    align-items: center;
+    gap: 2.25rem;
+  }
+
+  .nav a {
+    font-size: 0.72rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: var(--kz-a9);
+    white-space: nowrap;
+    transition: color 0.25s ease;
+  }
+
+  .nav a:hover {
+    color: var(--kz-eb);
+  }
+
+  .nav .nav-contact {
+    color: var(--kz-eb);
+    padding: 0.6rem 1.1rem;
+    border: 1px solid rgba(235, 235, 235, 0.35);
+  }
+
+  .nav .nav-contact:hover {
+    background: var(--kz-eb);
+    color: var(--kz-0b);
+  }
+
+  .menu-btn {
+    display: none;
+    width: 40px;
+    height: 40px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-end;
+    gap: 7px;
+  }
+
+  .menu-btn span {
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--kz-eb);
+    transition: transform 0.3s var(--ease);
+  }
+
+  .menu-btn[aria-expanded='true'] span:first-child {
+    transform: translateY(4px) rotate(45deg);
+  }
+
+  .menu-btn[aria-expanded='true'] span:last-child {
+    transform: translateY(-4px) rotate(-45deg);
+  }
+
+  @media (max-width: 960px) {
+    .menu-btn {
+      display: flex;
+    }
+
+    .nav {
+      position: fixed;
+      top: var(--header-h);
+      left: 0;
+      right: 0;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0;
+      padding: 1rem var(--gutter) 2rem;
+      background: var(--kz-0b);
+      border-bottom: 1px solid rgba(235, 235, 235, 0.08);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-8px);
+      transition: opacity 0.3s ease, transform 0.3s var(--ease), visibility 0.3s;
+    }
+
+    .nav.is-open {
+      opacity: 1;
+      visibility: visible;
+      transform: none;
+    }
+
+    .nav a {
+      width: 100%;
+      padding: 1rem 0;
+      font-size: 0.8rem;
+      border-bottom: 1px solid rgba(235, 235, 235, 0.08);
+    }
+
+    .nav .nav-contact {
+      border: none;
+      padding: 1rem 0;
+    }
+  }
+</style>
+
+<script>
+  const btn = document.getElementById('menuBtn');
+  const nav = document.getElementById('nav');
+
+  const setOpen = (open: boolean) => {
+    nav?.classList.toggle('is-open', open);
+    btn?.setAttribute('aria-expanded', String(open));
+  };
+
+  btn?.addEventListener('click', () => setOpen(!nav?.classList.contains('is-open')));
+  nav?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+</script>

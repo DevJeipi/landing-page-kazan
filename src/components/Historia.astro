@@ -1,0 +1,186 @@
+---
+import Photo from './Photo.astro';
+
+// Substitua os anos e textos pelos marcos reais da Kazan.
+const marcos = [
+  {
+    ano: 'Origem',
+    titulo: 'Fundação no Vale do Sinos',
+    texto: 'Início das atividades em Campo Bom (RS), no coração do polo coureiro-calçadista gaúcho.'
+  },
+  {
+    ano: 'Expansão',
+    titulo: 'Produção para grandes marcas',
+    texto: 'Homologação como indústria parceira de grandes grupos nacionais de moda e varejo.'
+  },
+  {
+    ano: 'Engenharia',
+    titulo: 'Estrutura ponta a ponta',
+    texto: 'Consolidação do setor próprio de modelagem, prototipagem e desenvolvimento completo.'
+  },
+  {
+    ano: 'Hoje',
+    titulo: 'Referência em couro legítimo',
+    texto: 'Reconhecida pela maestria em peles nobres aliada à produção em acrílico, sintéticos e tecidos.'
+  }
+];
+---
+
+<section class="section light" id="historia">
+  <div class="container">
+    <div class="section-head reveal">
+      <p class="label"><span>01</span>História</p>
+      <h2 class="title">Uma trajetória construída no couro.</h2>
+    </div>
+
+    <div class="historia-grid">
+      <div class="historia-media reveal">
+        <Photo
+          label="Foto histórica · Tradição fabril"
+          src="https://images.unsplash.com/photo-1531973576160-7125cd663d86?auto=format&fit=crop&w=1000&q=80"
+          ratio="4 / 5"
+        />
+      </div>
+
+      <div class="historia-body reveal">
+        <p class="text historia-intro">
+          Nascida em Campo Bom (RS), a Kazan cresceu ao lado da tradição coureiro-calçadista do Rio Grande do Sul. Ao longo dos anos, consolidou-se como braço industrial de grandes marcas, assumindo todo o ciclo entre o desenho inicial e a bolsa pronta para a vitrine.
+        </p>
+
+        <ol class="timeline">
+          {marcos.map((m, idx) => (
+            <li class={`timeline-item ${idx === 0 ? 'is-active' : ''}`}>
+              <div class="tl-left">
+                <span class="tl-index">0{idx + 1}</span>
+                <span class="ano">{m.ano}</span>
+              </div>
+              <div class="tl-right">
+                <h3>{m.titulo}</h3>
+                <p>{m.texto}</p>
+              </div>
+            </li>
+          ))}
+        </ol>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .historia-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 0.95fr) minmax(0, 1.35fr);
+    gap: clamp(2.5rem, 5vw, 5rem);
+    align-items: start;
+  }
+
+  .historia-media {
+    position: sticky;
+    top: calc(var(--header-h) + 2.5rem);
+    align-self: start;
+  }
+
+  .historia-intro {
+    font-size: 1.08rem;
+    color: var(--kz-0b);
+    max-width: 58ch;
+  }
+
+  .timeline {
+    list-style: none;
+    margin-top: 2.75rem;
+    border-top: 1px solid var(--line);
+  }
+
+  .timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 9.5rem minmax(0, 1fr);
+    gap: 1.75rem;
+    padding: 1.65rem 1.25rem;
+    border-bottom: 1px solid var(--line);
+    transition: background-color 0.4s var(--ease), padding-left 0.4s var(--ease);
+    cursor: default;
+  }
+
+  .timeline-item::before {
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--kz-0b);
+    transition: width 0.5s var(--ease);
+  }
+
+  .timeline-item:hover,
+  .timeline-item.is-active {
+    background-color: rgba(11, 11, 11, 0.045);
+    padding-left: 1.75rem;
+  }
+
+  .timeline-item:hover::before,
+  .timeline-item.is-active::before {
+    width: 100%;
+  }
+
+  .tl-left {
+    display: flex;
+    flex-direction: column;
+    gap: 0.2rem;
+  }
+
+  .tl-index {
+    font-size: 0.66rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--muted);
+  }
+
+  .ano {
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    color: var(--kz-0b);
+  }
+
+  .tl-right h3 {
+    font-size: 1.08rem;
+    font-weight: 500;
+    color: var(--kz-0b);
+    margin-bottom: 0.3rem;
+  }
+
+  .tl-right p {
+    font-size: 0.94rem;
+    color: var(--muted);
+    line-height: 1.6;
+  }
+
+  @media (max-width: 860px) {
+    .historia-grid {
+      grid-template-columns: 1fr;
+    }
+    .historia-media {
+      position: static;
+    }
+  }
+
+  @media (max-width: 540px) {
+    .timeline-item {
+      grid-template-columns: 1fr;
+      gap: 0.4rem;
+    }
+  }
+</style>
+
+<script>
+  const tlItems = document.querySelectorAll('.timeline-item');
+  tlItems.forEach((item) => {
+    item.addEventListener('mouseenter', () => {
+      tlItems.forEach((el) => el.classList.remove('is-active'));
+      item.classList.add('is-active');
+    });
+  });
+</script>
