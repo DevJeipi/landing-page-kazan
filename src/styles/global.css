@@ -357,12 +357,21 @@ a {
   transition: transform 0.3s var(--ease);
 }
 
+.menu-btn[aria-expanded='true'] span:first-child {
+  transform: translateY(4px) rotate(45deg);
+}
+
+.menu-btn[aria-expanded='true'] span:last-child {
+  transform: translateY(-4px) rotate(-45deg);
+}
+
 /* ---------- Hero ---------- */
 .hero {
   padding-top: calc(var(--header-h) + clamp(3.5rem, 7vw, 5.5rem));
   padding-bottom: clamp(4.5rem, 8vw, 7rem);
   position: relative;
   border-bottom: 1px solid var(--line);
+  overflow: hidden;
 }
 
 .hero-watermark {
@@ -1307,12 +1316,14 @@ a {
     padding: 1.5rem !important;
     border-bottom: 1px solid var(--line);
   }
-}
 
-@media (max-width: 760px) {
+  .etapa-card:nth-child(even) {
+    border-right: none;
+  }
+
   .galeria {
     grid-template-columns: repeat(2, minmax(0, 1fr));
-    grid-auto-rows: 210px;
+    grid-auto-rows: 230px;
   }
 
   .galeria .photo {
@@ -1327,12 +1338,56 @@ a {
 }
 
 @media (max-width: 560px) {
+  .hero-title {
+    font-size: clamp(1.85rem, 7.2vw, 2.35rem);
+  }
+
+  .hero-br {
+    display: inline;
+  }
+
+  .hero-pillars {
+    flex-wrap: wrap;
+    gap: 1rem 1.75rem;
+  }
+
+  .hero-media {
+    padding-left: 1rem;
+    padding-bottom: 1.25rem;
+  }
 
   .produtos-accordion,
   .etapas-grid,
   .form-row,
   .timeline-item {
     grid-template-columns: 1fr;
+  }
+
+  .etapa-card {
+    border-right: none !important;
+  }
+
+  .galeria {
+    grid-template-columns: 1fr;
+    grid-auto-rows: 240px;
+  }
+
+  .galeria .g-1,
+  .galeria .g-6 {
+    grid-column: span 1 !important;
+  }
+
+  .vagas-list-header {
+    flex-wrap: wrap;
+  }
+
+  .areas-status {
+    display: none;
+  }
+
+  .form-footer {
+    flex-direction: column;
+    align-items: stretch;
   }
 }
 

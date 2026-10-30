@@ -1,7 +1,6 @@
 ---
 import Photo from './Photo.astro';
 
-// Substitua os links pelas fotos reais da fábrica em /public/images/ quando estiverem prontas.
 const fotos = [
   {
     titulo: 'Vista geral da fábrica',
@@ -48,40 +47,3 @@ const fotos = [
     </div>
   </div>
 </section>
-
-<style>
-  .galeria {
-    display: grid;
-    grid-template-columns: repeat(12, minmax(0, 1fr));
-    grid-auto-rows: clamp(190px, 21vw, 280px);
-    gap: clamp(0.75rem, 1.4vw, 1.25rem);
-  }
-
-  .galeria :global(.photo) {
-    height: 100%;
-  }
-
-  .galeria :global(.g-1) { grid-column: span 7; grid-row: span 2; }
-  .galeria :global(.g-2) { grid-column: span 5; }
-  .galeria :global(.g-3) { grid-column: span 5; }
-  .galeria :global(.g-4) { grid-column: span 4; }
-  .galeria :global(.g-5) { grid-column: span 4; }
-  .galeria :global(.g-6) { grid-column: span 4; }
-
-  @media (max-width: 760px) {
-    .galeria {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      grid-auto-rows: 210px;
-    }
-
-    .galeria :global(.photo) {
-      grid-column: span 1 !important;
-      grid-row: span 1 !important;
-    }
-
-    .galeria :global(.g-1),
-    .galeria :global(.g-6) {
-      grid-column: span 2 !important;
-    }
-  }
-</style>
